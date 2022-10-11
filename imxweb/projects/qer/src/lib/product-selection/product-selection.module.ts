@@ -45,7 +45,7 @@ import {
   ClassloggerService,
   MenuService,
   MenuItem,
-  DataTreeWrapperModule
+  DataTreeWrapperModule,
 } from 'qbm';
 import { ProductSelectionComponent } from './product-selection.component';
 import { ServiceCategoryListComponent } from './servicecategory-list/servicecategory-list.component';
@@ -68,8 +68,8 @@ const routes: Routes = [
     path: 'productselection',
     component: ProductSelectionComponent,
     canActivate: [RouteGuardService, RequestsFeatureGuardService],
-    resolve: [RouteGuardService]
-  }
+    resolve: [RouteGuardService],
+  },
 ];
 
 @NgModule({
@@ -94,7 +94,7 @@ const routes: Routes = [
     ServiceItemsModule,
     PatternItemsModule,
     UserModule,
-    BulkPropertyEditorModule
+    BulkPropertyEditorModule,
   ],
   declarations: [
     ProductSelectionComponent,
@@ -104,53 +104,45 @@ const routes: Routes = [
     RoleMembershipsComponent,
     ProductDetailsSidesheetComponent,
     PatternDetailsSidesheetComponent,
-    OptionalItemsSidesheetComponent
+    OptionalItemsSidesheetComponent,
   ],
-  providers: [
-    ProductSelectionService
-  ],
-  entryComponents: [
-    ProductDetailsSidesheetComponent,
-    PatternDetailsSidesheetComponent
-  ]
+  providers: [ProductSelectionService],
+  entryComponents: [ProductDetailsSidesheetComponent, PatternDetailsSidesheetComponent],
 })
-
 export class ProductSelectionModule {
-  constructor(
-    private readonly menuService: MenuService,
-    logger: ClassloggerService
-  ) {
+  constructor(private readonly menuService: MenuService, logger: ClassloggerService) {
     logger.info(this, '▶️ ProductSelectionModule loaded');
     this.setupMenu();
   }
 
   private setupMenu(): void {
-    this.menuService.addMenuFactories(
-      (preProps: string[], groups: string[]) => {
+    this.menuService.addMenuFactories((preProps: string[], groups: string[]) => {
+      const items: MenuItem[] = [];
 
-        const items: MenuItem[] = [];
+      if (preProps.includes('ITSHOP')) {
+        items.push({
+          id: 'QER_Requests_NewRequest',
+          route: 'productselection',
+          title: '#LDS#Menu Entry New request',
+          sorting: '10-10',
+        });
+        items.push({
+          id: 'QER_Requests_Test',
+          route: 'productselection',
+          title: '#LDS#Testing',
+          sorting: '10-10',
+        });
+      }
 
-        if (preProps.includes('ITSHOP')) {
-          items.push(
-            {
-              id: 'QER_Requests_NewRequest',
-              route: 'productselection',
-              title: '#LDS#Menu Entry New request',
-              sorting: '10-10',
-            },
-          );
-        }
-
-        if (items.length === 0) {
-          return null;
-        }
-        return {
-          id: 'ROOT_Request',
-          title: '#LDS#Requests',
-          sorting: '10',
-          items
-        };
-      },
-    );
+      if (items.length === 0) {
+        return null;
+      }
+      return {
+        id: 'ROOT_Request',
+        title: '#LDS#Requests',
+        sorting: '10',
+        items,
+      };
+    });
   }
 }
