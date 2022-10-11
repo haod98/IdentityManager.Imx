@@ -62,6 +62,7 @@ import { PatternDetailsSidesheetComponent } from './pattern-details-sidesheet/pa
 import { ProductEntitlementsComponent } from '../itshop/request-info/service-item-detail//product-entitlements/product-entitlements.component';
 import { PatternItemsModule } from '../pattern-item-list/pattern-items.module';
 import { OptionalItemsSidesheetComponent } from './optional-items-sidesheet/optional-items-sidesheet.component';
+import { TestComponentComponent } from './test-component/test-component.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,12 @@ const routes: Routes = [
     component: ProductSelectionComponent,
     canActivate: [RouteGuardService, RequestsFeatureGuardService],
     resolve: [RouteGuardService],
+  },
+  {
+    path: 'test',
+    component: TestComponentComponent,
+    // canActivate: [RouteGuardService, RequestsFeatureGuardService],
+    // resolve: [RouteGuardService],
   },
 ];
 
@@ -105,6 +112,7 @@ const routes: Routes = [
     ProductDetailsSidesheetComponent,
     PatternDetailsSidesheetComponent,
     OptionalItemsSidesheetComponent,
+    TestComponentComponent,
   ],
   providers: [ProductSelectionService],
   entryComponents: [ProductDetailsSidesheetComponent, PatternDetailsSidesheetComponent],
@@ -128,7 +136,7 @@ export class ProductSelectionModule {
         });
         items.push({
           id: 'QER_Requests_Test',
-          route: 'productselection',
+          route: 'test',
           title: '#LDS#Testing',
           sorting: '10-10',
         });
