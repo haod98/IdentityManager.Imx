@@ -5,7 +5,8 @@
 
 Go to ``./imxweb/projects/qer/src/lib`` folder. Generate a new module and call the ``setupMenu()`` method in the constructor. For example:
 
-  ```private setupMenu(): void {
+  ``` javascript
+  private setupMenu(): void {
     this.menuService.addMenuFactories((preProps: string[], groups: string[]) => {
       const items: MenuItem[] = [];
 
