@@ -69,6 +69,7 @@ import {
   RoleManangementModule,
   ItshopPatternModule,
   TestMenuModule,
+  MyNewMenu,
 } from 'qer';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -124,6 +125,7 @@ import { PortalHistoryService } from './portal-history.service';
     ServiceCategoriesModule,
     ServiceItemsEditModule,
     TestMenuModule,
+    MyNewMenu,
   ],
   providers: [
     { provide: 'environment', useValue: environment },
