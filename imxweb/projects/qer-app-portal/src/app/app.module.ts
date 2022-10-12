@@ -72,6 +72,8 @@ import {
   MyNewMenu,
 } from 'qer';
 
+import { NewMenu } from 'ccc';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
@@ -126,6 +128,7 @@ import { PortalHistoryService } from './portal-history.service';
     ServiceItemsEditModule,
     TestMenuModule,
     MyNewMenu,
+    NewMenu,
   ],
   providers: [
     { provide: 'environment', useValue: environment },
