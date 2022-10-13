@@ -48,7 +48,7 @@ import {
   QbmModule,
   AuthenticationModule,
   ObjectHistoryApiService,
-  ObjectHistoryModule,
+  ObjectHistoryModule
 } from 'qbm';
 import {
   AddressbookModule,
@@ -67,12 +67,8 @@ import {
   ProfileModule,
   RequestConfigModule,
   RoleManangementModule,
-  ItshopPatternModule,
-  TestMenuModule,
-  MyNewMenu,
+  ItshopPatternModule
 } from 'qer';
-
-import { NewMenu } from 'ccc';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -82,7 +78,9 @@ import appConfigJson from '../appconfig.json';
 import { PortalHistoryService } from './portal-history.service';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     AppRoutingModule,
     AuthenticationModule,
@@ -106,12 +104,12 @@ import { PortalHistoryService } from './portal-history.service';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useClass: ImxTranslateLoader,
+        useClass: ImxTranslateLoader
       },
       missingTranslationHandler: {
         provide: MissingTranslationHandler,
-        useClass: ImxMissingTranslationHandler,
-      },
+        useClass: ImxMissingTranslationHandler
+      }
     }),
     UserMessageModule,
     DelegationModule,
@@ -125,10 +123,7 @@ import { PortalHistoryService } from './portal-history.service';
     RequestConfigModule,
     RequestHistoryModule,
     ServiceCategoriesModule,
-    ServiceItemsEditModule,
-    TestMenuModule,
-    MyNewMenu,
-    NewMenu,
+    ServiceItemsEditModule
   ],
   providers: [
     { provide: 'environment', useValue: environment },
@@ -137,23 +132,26 @@ import { PortalHistoryService } from './portal-history.service';
       provide: APP_INITIALIZER,
       useFactory: AppService.init,
       deps: [AppService],
-      multi: true,
+      multi: true
     },
     {
       provide: ErrorHandler,
-      useClass: GlobalErrorHandler,
+      useClass: GlobalErrorHandler
     },
     {
       provide: ObjectHistoryApiService,
-      useClass: PortalHistoryService,
+      useClass: PortalHistoryService
     },
     {
       provide: MatPaginatorIntl,
       useFactory: Paginator.Create,
-      deps: [TranslateService, LdsReplacePipe],
+      deps: [
+        TranslateService,
+        LdsReplacePipe
+      ]
     },
-    CdrRegistryService,
+    CdrRegistryService
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -50,8 +50,6 @@ export { IdentitiesModule } from './lib/identities/identities.module';
 export { IdentitySidesheetComponent } from './lib/identities/identity-sidesheet/identity-sidesheet.component';
 export { IRequestableEntitlementType } from './lib/itshop-config/irequestable-entitlement-type';
 export { DelegationModule } from './lib/delegation/delegation.module';
-export { TestMenuModule } from './lib/test-menu/test-menu.module';
-export { MyNewMenu } from './lib/my-new-menu/my-new-menu.module';
 export { DelegationComponent } from './lib/delegation/delegation.component';
 export { NotificationTileComponent } from './lib/tiles/notification-tile/notification-tile.component';
 export { BadgeTileComponent } from './lib/tiles/badge-tile/badge-tile.component';

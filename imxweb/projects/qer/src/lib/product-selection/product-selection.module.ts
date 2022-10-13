@@ -45,7 +45,7 @@ import {
   ClassloggerService,
   MenuService,
   MenuItem,
-  DataTreeWrapperModule,
+  DataTreeWrapperModule
 } from 'qbm';
 import { ProductSelectionComponent } from './product-selection.component';
 import { ServiceCategoryListComponent } from './servicecategory-list/servicecategory-list.component';
@@ -62,21 +62,14 @@ import { PatternDetailsSidesheetComponent } from './pattern-details-sidesheet/pa
 import { ProductEntitlementsComponent } from '../itshop/request-info/service-item-detail//product-entitlements/product-entitlements.component';
 import { PatternItemsModule } from '../pattern-item-list/pattern-items.module';
 import { OptionalItemsSidesheetComponent } from './optional-items-sidesheet/optional-items-sidesheet.component';
-import { TestComponentComponent } from './test-component/test-component.component';
 
 const routes: Routes = [
   {
     path: 'productselection',
     component: ProductSelectionComponent,
     canActivate: [RouteGuardService, RequestsFeatureGuardService],
-    resolve: [RouteGuardService],
-  },
-  {
-    path: 'test',
-    component: TestComponentComponent,
-    // canActivate: [RouteGuardService, RequestsFeatureGuardService],
-    // resolve: [RouteGuardService],
-  },
+    resolve: [RouteGuardService]
+  }
 ];
 
 @NgModule({
@@ -101,7 +94,7 @@ const routes: Routes = [
     ServiceItemsModule,
     PatternItemsModule,
     UserModule,
-    BulkPropertyEditorModule,
+    BulkPropertyEditorModule
   ],
   declarations: [
     ProductSelectionComponent,
@@ -111,46 +104,53 @@ const routes: Routes = [
     RoleMembershipsComponent,
     ProductDetailsSidesheetComponent,
     PatternDetailsSidesheetComponent,
-    OptionalItemsSidesheetComponent,
-    TestComponentComponent,
+    OptionalItemsSidesheetComponent
   ],
-  providers: [ProductSelectionService],
-  entryComponents: [ProductDetailsSidesheetComponent, PatternDetailsSidesheetComponent],
+  providers: [
+    ProductSelectionService
+  ],
+  entryComponents: [
+    ProductDetailsSidesheetComponent,
+    PatternDetailsSidesheetComponent
+  ]
 })
+
 export class ProductSelectionModule {
-  constructor(private readonly menuService: MenuService, logger: ClassloggerService) {
+  constructor(
+    private readonly menuService: MenuService,
+    logger: ClassloggerService
+  ) {
     logger.info(this, '▶️ ProductSelectionModule loaded');
     this.setupMenu();
   }
 
   private setupMenu(): void {
-    this.menuService.addMenuFactories((preProps: string[], groups: string[]) => {
-      const items: MenuItem[] = [];
+    this.menuService.addMenuFactories(
+      (preProps: string[], groups: string[]) => {
 
-      if (preProps.includes('ITSHOP')) {
-        items.push({
-          id: 'QER_Requests_NewRequest',
-          route: 'productselection',
-          title: '#LDS#Menu Entry New request',
-          sorting: '10-10',
-        });
-        items.push({
-          id: 'QER_Requests_Test',
-          route: 'test',
-          title: '#LDS#Testing',
-          sorting: '10-10',
-        });
-      }
+        const items: MenuItem[] = [];
 
-      if (items.length === 0) {
-        return null;
-      }
-      return {
-        id: 'ROOT_Request',
-        title: '#LDS#Requests',
-        sorting: '10',
-        items,
-      };
-    });
+        if (preProps.includes('ITSHOP')) {
+          items.push(
+            {
+              id: 'QER_Requests_NewRequest',
+              route: 'productselection',
+              title: '#LDS#Menu Entry New request',
+              sorting: '10-10',
+            },
+          );
+        }
+
+        if (items.length === 0) {
+          return null;
+        }
+        return {
+          id: 'ROOT_Request',
+          title: '#LDS#Requests',
+          sorting: '10',
+          items
+        };
+      },
+    );
   }
 }

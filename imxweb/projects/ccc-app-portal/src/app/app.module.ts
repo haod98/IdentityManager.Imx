@@ -68,8 +68,6 @@ import {
   RequestConfigModule,
   RoleManangementModule,
   ItshopPatternModule,
-  TestMenuModule,
-  MyNewMenu,
 } from 'qer';
 
 import { NewMenu } from 'ccc';
@@ -126,8 +124,6 @@ import { PortalHistoryService } from './portal-history.service';
     RequestHistoryModule,
     ServiceCategoriesModule,
     ServiceItemsEditModule,
-    TestMenuModule,
-    MyNewMenu,
     NewMenu,
   ],
   providers: [
