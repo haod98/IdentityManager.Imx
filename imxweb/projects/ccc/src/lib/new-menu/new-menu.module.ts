@@ -1,19 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// import { TestMenuComponent } from './test-menu.component';
 import { MenuService, ClassloggerService, MenuItem } from 'qbm';
-import { NewMenuComponent } from './new-menu.component';
-import { Routes, RouterModule } from '@angular/router';
-
-const routes: Routes = [{ path: 'ccc-test', component: NewMenuComponent }];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  declarations: [NewMenuComponent],
+  // declarations: [TestMenuComponent],
+  imports: [CommonModule],
 })
 export class NewMenu {
   constructor(private readonly menuService: MenuService, logger: ClassloggerService) {
-    logger.info(this, '▶️ CCC loaded');
+    logger.info(this, '▶️ CUSTOOOOMM loaded');
     this.setupMenu();
   }
 
@@ -24,7 +20,7 @@ export class NewMenu {
       if (preProps.includes('ITSHOP')) {
         items.push({
           id: 'CCC_Responsibilities_Delegation_CCC',
-          route: 'ccc-test',
+          route: 'delegation',
           title: '#LDS#My New CCC Sub Menu',
           sorting: '40-10',
         });
