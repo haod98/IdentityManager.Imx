@@ -1,11 +1,18 @@
 # Notes
-[IdentityManger Repo](https://github.com/OneIdentity/IdentityManager.Imx)
+
+<span style="font-size: 25px;">[IdentityManger Repo](https://github.com/OneIdentity/IdentityManager.Imx)</span>
 
 ### How to add new menu category
 
-Go to ``./imxweb/projects/qer/src/lib`` folder. Generate a new module and call the ``setupMenu()`` method in the constructor. For example:
+Go to ``./imxweb/projects/ccc/src/lib`` folder. Generate a new module (`ng g module nameOftheModule`) and call the ``setupMenu()`` method in the constructor.
 
   ``` javascript
+export class MyNewMenu {
+  constructor(private readonly menuService: MenuService, logger: ClassloggerService) {
+    logger.info(this, '▶️ custom item loaded');
+    this.setupMenu();
+  }
+
   private setupMenu(): void {
     this.menuService.addMenuFactories((preProps: string[], groups: string[]) => {
       const items: MenuItem[] = [];
@@ -33,12 +40,30 @@ Go to ``./imxweb/projects/qer/src/lib`` folder. Generate a new module and call t
       };
     });
   }
+}
   ```
 
-Now go to ``./imxweb/projects/qer/src/public_api.ts`` file and add your module to the exports. Once done, go to ``./imxweb/projects/qer-app-portal/src/app/app.module.ts`` file, import your module from ``qer`` and also add it in the ``@NgModule`` imports array. 
+This is how a routes could look like inside the module file:
+
+``` javascript
+import { Routes, RouterModule } from '@angular/router';
+const routes: Routes = [{ path: 'myRouteOfTheSubItems', component: myComponent }];
+@NgModule({
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  declarations: [NewMenuComponent],
+})
+```
+
+Now go to `./imxweb/projects/ccc/src/public_api.ts` file and add your module to the exports. 
+
+``` javascript
+export { MyNewMenu } from './path/to/the/module';
+```
+
+Once done, go to `./imxweb/projects/ccc-app-portal/src/app/app.module.ts` file, import your module from `ccc` and also add it in the `@NgModule` imports array. 
   
 **IMPORTANT** 
-In order to see the changes you have to rebuild everything again. In our example we need to rebuild ``qbm``, ``qer`` (The order is also important). Like so: ``npm run build qbm && npm run build qer``. If everything works you should see a new menu item. 
+In order to see the changes you have to rebuild everything again. Since we only changed code in `ccc`, we only need to rebuild `ccc`. Like so: `npm run build ccc`. If everything works you should see a new menu item. 
 
 ---
 ### How to create ccc-app-portal
