@@ -27,6 +27,6 @@
 export const environment = {
   production: true,
   clientUrl: '',
-  appName: 'ccc-app-portal',
+  appName: 'qer-app-portal',
   appVersion: '1.0.0',
 };
