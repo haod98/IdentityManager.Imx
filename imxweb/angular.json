@@ -1678,7 +1678,7 @@
       },
       "root": "projects/ccc-app-portal",
       "sourceRoot": "projects/ccc-app-portal/src",
-      "prefix": "ccc",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -1696,6 +1696,7 @@
             ],
             "styles": [
               "projects/ccc-app-portal/src/styles.scss",
+              "projects/qer-app-portal/src/styles.scss",
               "projects/qbm/src/lib/styles/imx-page-title.scss",
               "projects/qbm/src/lib/styles/data-explorer-common.scss",
               "projects/qbm/src/lib/styles/data-explorer-details-common.scss",
@@ -1710,11 +1711,7 @@
                 "./node_modules/@elemental-ui/core"
               ]
             },
-            "scripts": [
-              "node_modules/systemjs/dist/system.src.js",
-              "node_modules/systemjs-plugin-babel/plugin-babel.js",
-              "node_modules/systemjs-plugin-babel/systemjs-babel-browser.js"
-            ]
+            "scripts": ["node_modules/systemjs/dist/system.src.js"]
           },
           "configurations": {
             "production": {
