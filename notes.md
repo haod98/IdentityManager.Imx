@@ -33,12 +33,160 @@ Go to ``./imxweb/projects/qer/src/lib`` folder. Generate a new module and call t
       };
     });
   }
-
   ```
 
 Now go to ``./imxweb/projects/qer/src/public_api.ts`` file and add your module to the exports. Once done, go to ``./imxweb/projects/qer-app-portal/src/app/app.module.ts`` file, import your module from ``qer`` and also add it in the ``@NgModule`` imports array. 
   
 **IMPORTANT** 
 In order to see the changes you have to rebuild everything again. In our example we need to rebuild ``qbm``, ``qer`` (The order is also important). Like so: ``npm run build qbm && npm run build qer``. If everything works you should see a new menu item. 
+
+---
+### How to create ccc-app-portal
+Go to the folder `./imxweb/projects`, execute the following command: `ng g application ccc-app-portal`. It will create a new application and write necessary settings in `angular.json`. 
+
+Delete all the files from `ccc-app-portal` folder and copy all files  from `qer-app-portal`  into  
+`ccc-app-portal`. Now you have to adjust all the settings in `angular.json` for the `ccc-app-portal`.
+
+```json
+    "ccc-app-portal": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/ccc-app-portal",
+      "sourceRoot": "projects/ccc-app-portal/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ccc-app-portal",
+            "index": "projects/ccc-app-portal/src/index.html",
+            "main": "projects/ccc-app-portal/src/main.ts",
+            "polyfills": "projects/ccc-app-portal/src/polyfills.ts",
+            "tsConfig": "projects/ccc-app-portal/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/ccc-app-portal/src/favicon.ico",
+              "projects/ccc-app-portal/src/assets",
+              "projects/ccc-app-portal/src/appconfig.json",
+              {
+                "glob": "**/*",
+                "input": "./html",
+                "output": "./html"
+              },
+              {
+                "glob": "**/*",
+                "input": "./shared/assets/",
+                "output": "./assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@elemental-ui/core/assets",
+                "output": "./assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/systemjs-plugin-babel/",
+                "output": "./systemjs-plugin-babel"
+              }
+            ],
+            "styles": [
+              "projects/ccc-app-portal/src/styles.scss",
+              "projects/qer-app-portal/src/styles.scss",
+              "projects/qbm/src/lib/styles/imx-page-title.scss",
+              "projects/qbm/src/lib/styles/data-explorer-common.scss",
+              "projects/qbm/src/lib/styles/data-explorer-details-common.scss",
+              "shared/assets/styles.scss",
+              "shared/assets/variables.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./shared/assets",
+                "./node_modules",
+                "./node_modules/@elemental-ui/cadence-icon",
+                "./node_modules/@elemental-ui/core"
+              ]
+            },
+            "scripts": [
+              "node_modules/systemjs/dist/system.src.js",
+              "node_modules/systemjs-plugin-babel/plugin-babel.js",
+              "node_modules/systemjs-plugin-babel/systemjs-babel-browser.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/ccc-app-portal/src/environments/environment.ts",
+                  "with": "projects/ccc-app-portal/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "ccc-app-portal:build:production"
+            },
+            "development": {
+              "browserTarget": "ccc-app-portal:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ccc-app-portal:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ccc-app-portal/src/test.ts",
+            "polyfills": "projects/ccc-app-portal/src/polyfills.ts",
+            "tsConfig": "projects/ccc-app-portal/tsconfig.spec.json",
+            "karmaConfig": "projects/ccc-app-portal/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": ["projects/ccc-app-portal/src/favicon.ico", "projects/ccc-app-portal/src/assets"],
+            "styles": ["projects/ccc-app-portal/src/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
+    }
+```
+
+**IMPORTANT** Somehow when changing the app name in `./imxweb/projects/ccc-app-portal/src/environments.ts` and `./imxweb/projects/ccc-app-portal/src/environments.prod.ts` to `ccc-app-portal` causes an error and the website won't load. No fix found yet.  
 
 ---
