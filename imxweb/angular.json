@@ -1692,7 +1692,27 @@
             "assets": [
               "projects/ccc-app-portal/src/favicon.ico",
               "projects/ccc-app-portal/src/assets",
-              "projects/ccc-app-portal/src/appconfig.json"
+              "projects/ccc-app-portal/src/appconfig.json",
+              {
+                "glob": "**/*",
+                "input": "./html",
+                "output": "./html"
+              },
+              {
+                "glob": "**/*",
+                "input": "./shared/assets/",
+                "output": "./assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@elemental-ui/core/assets",
+                "output": "./assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/systemjs-plugin-babel/",
+                "output": "./systemjs-plugin-babel"
+              }
             ],
             "styles": [
               "projects/ccc-app-portal/src/styles.scss",
@@ -1711,7 +1731,11 @@
                 "./node_modules/@elemental-ui/core"
               ]
             },
-            "scripts": ["node_modules/systemjs/dist/system.src.js"]
+            "scripts": [
+              "node_modules/systemjs/dist/system.src.js",
+              "node_modules/systemjs-plugin-babel/plugin-babel.js",
+              "node_modules/systemjs-plugin-babel/systemjs-babel-browser.js"
+            ]
           },
           "configurations": {
             "production": {
