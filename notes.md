@@ -215,3 +215,28 @@ Delete all the files from `ccc-app-portal` folder and copy all files  from `qer-
 **IMPORTANT** Somehow when changing the app name in `./imxweb/projects/ccc-app-portal/src/environments.ts` and `./imxweb/projects/ccc-app-portal/src/environments.prod.ts` to `ccc-app-portal` causes an error and the website won't load. No fix found yet.  
 
 ---
+
+### Change Angular Material theme 
+Copy the `./imxweb/shared/assets/variables.scss` file to `./imxweb/projects/ccc-app-portal/src/`. Here you can create your own theme independently. Example: 
+
+``` scss
+@use "@angular/material" as mat;
+@include mat-core();
+// https://material.io/archive/guidelines/style/color.html#color-color-palette
+$my-app-primary: mat.define-palette(mat.$indigo-palette);
+$my-app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$my-app-warn: mat.define-palette(mat.$red-palette);
+
+$my-app-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $my-app-primary,
+            accent: $my-app-accent,
+            warn: $my-app-warn,
+        ),
+    )
+);
+
+@include mat.all-component-themes($my-app-theme);
+```
+Not every color will be changed. No fix found yet. 
