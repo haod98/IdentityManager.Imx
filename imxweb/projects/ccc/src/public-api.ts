@@ -7,3 +7,4 @@ export * from './lib/ccc.component';
 export * from './lib/ccc.module';
 
 export { NewMenu } from './lib/new-menu/new-menu.module';
+export { NewRequest } from './lib/requests/new-request/new-request.module';

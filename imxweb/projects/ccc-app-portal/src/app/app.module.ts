@@ -52,9 +52,9 @@ import {
 } from 'qbm';
 import {
   AddressbookModule,
-  ApprovalsModule,
+  // ApprovalsModule,
   IdentitiesModule,
-  DelegationModule,
+  // DelegationModule,
   ObjectSheetModule,
   ObjectsheetPersonModule,
   ProductSelectionModule,
@@ -67,10 +67,10 @@ import {
   ProfileModule,
   RequestConfigModule,
   RoleManangementModule,
-  ItshopPatternModule,
+  // ItshopPatternModule,
 } from 'qer';
 
-import { NewMenu } from 'ccc';
+import { NewMenu, NewRequest } from 'ccc';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -112,19 +112,20 @@ import { PortalHistoryService } from './portal-history.service';
       },
     }),
     UserMessageModule,
-    DelegationModule,
+    // DelegationModule,
     ShoppingCartModule,
     ObjectHistoryModule,
     ObjectSheetModule,
     ObjectsheetPersonModule,
     ProductSelectionModule,
-    ApprovalsModule,
-    ItshopPatternModule,
+    // ApprovalsModule,
+    // ItshopPatternModule,
     RequestConfigModule,
     RequestHistoryModule,
     ServiceCategoriesModule,
     ServiceItemsEditModule,
     NewMenu,
+    NewRequest,
   ],
   providers: [
     { provide: 'environment', useValue: environment },
