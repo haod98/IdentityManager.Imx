@@ -1717,7 +1717,6 @@
             "styles": [
               "projects/ccc-app-portal/src/styles.scss",
               "projects/ccc-app-portal/src/variables.scss",
-              "projects/qer-app-portal/src/styles.scss",
               "projects/qbm/src/lib/styles/imx-page-title.scss",
               "projects/qbm/src/lib/styles/data-explorer-common.scss",
               "projects/qbm/src/lib/styles/data-explorer-details-common.scss",
