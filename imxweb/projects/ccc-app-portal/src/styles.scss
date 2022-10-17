@@ -7,6 +7,9 @@ $source_sans_pro_font_path: "~node_modules/@elemental-ui/core/assets/Source_Sans
 
 @import "@elemental-ui/core/src/styles/core.scss";
 
+.eui-masthead {
+    background-color: salmon !important;
+}
 .imx-dialog-panel-class > .mat-dialog-container {
     background-color: mat.get-color-from-palette($asher-gray-palette, 200);
 }
