@@ -5,10 +5,10 @@ CHECKBOX_NAME = 'modules'
 questions = [
     inquirer.Checkbox(CHECKBOX_NAME,
                       message="which modules do you need? (Please consider the order)",
-                      choices=['qbm', 'qer', 'tsb', 'att',
-                               'rms', 'rps', 'aad', 'aob',
-                               'uci', 'cpl', 'hds', 'dpr',
-                               'o3t', 'olg', 'pol'],
+                      choices=['qbm', 'qer', 'ccc', 'tsb',
+                               'att', 'rms', 'rps', 'aad',
+                               'aob', 'uci', 'cpl', 'hds',
+                               'dpr', 'o3t', 'olg', 'pol'],
                       carousel=True
                       )
 ]
@@ -23,4 +23,4 @@ for module in selectedModules:
         commandToExecute += 'npm run build ' + module + ' && '
 
 print(commandToExecute)
-# os.system(commandToExecute)
+os.system(commandToExecute)
