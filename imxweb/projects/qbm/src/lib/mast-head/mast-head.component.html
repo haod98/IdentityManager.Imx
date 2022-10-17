@@ -1,8 +1,10 @@
 <eui-masthead [ngClass]="logoUrl ? 'no-logo' : ''" data-imx-identifier="masthead" (logoClicked)="goHome()">
+  <p>HELLO WOOOORLD</p>
   <mat-toolbar color="primary" data-imx-identifier="masthead-toolbar">
     <mat-toolbar-row>
       <!-- custom logo-->
-      <img class="custom-logo" *ngIf="logoUrl" [src]="logoUrl" data-imx-identifier="masthead-custom-logo" (click)="goHome()">
+      <img class="custom-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Vienna_logo.svg/2560px-Vienna_logo.svg.png" (click)="goHome()" id="image-hao" />
+      <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Vienna_logo.svg/2560px-Vienna_logo.svg.png" id="image-hao" /> -->
 
       <h1 class="imx-masthead-app-name" data-imx-identifier="masthead-button-goHome" (click)="goHome()">
         {{ appConfig?.Config?.Title }}
@@ -25,8 +27,7 @@
 </eui-top-navigation> -->
 
 <ng-template #mastHeadMenu>
-  <button mat-button class="imx-masthead-user-button" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="imxUserMenu"
-    data-imx-identifier="user-menu">
+  <button mat-button class="imx-masthead-user-button" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="imxUserMenu" data-imx-identifier="user-menu">
     <eui-icon icon="user"></eui-icon>
     <span>{{ sessionState?.Username }}</span>
   </button>
@@ -36,14 +37,12 @@
       <span translate>#LDS#Log off</span>
     </button>
   </mat-menu>
-  <button mat-button class="imx-masthead--icon-button" [matMenuTriggerFor]="helpMenu"
-    data-imx-identifier="help-menu-button">
+  <button mat-button class="imx-masthead--icon-button" [matMenuTriggerFor]="helpMenu" data-imx-identifier="help-menu-button">
     <eui-icon icon="help"></eui-icon>
     <span translate>#LDS#Menu Entry Help</span>
   </button>
   <mat-menu #helpMenu="matMenu">
-    <button mat-menu-item data-imx-identifier="help-menu-documentation" *ngIf="hasDocumentationConfig"
-      (click)="navigateToDocumentation()">
+    <button mat-menu-item data-imx-identifier="help-menu-documentation" *ngIf="hasDocumentationConfig" (click)="navigateToDocumentation()">
       <span translate>#LDS#Menu Entry Documentation</span>
     </button>
     <button mat-menu-item data-imx-identifier="help-menu-about" (click)="openAboutDialog()">
