@@ -240,3 +240,7 @@ $my-app-theme: mat.define-light-theme(
 @include mat.all-component-themes($my-app-theme);
 ```
 Not every color will be changed. No fix found yet. 
+
+---
+### Misc
+Apparently changing the variable `$iris-blue` in `./node_modules/@elemental-ui/core/src/styles/_palette.scss` has effects on some pages. For example the **login page**. You have to rebuild `qbm` to see the changes. 
