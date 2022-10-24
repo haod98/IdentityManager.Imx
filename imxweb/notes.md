@@ -244,3 +244,5 @@ Not every color will be changed. No fix found yet.
 ---
 ### Misc
 Apparently changing the variable `$iris-blue` in `./node_modules/@elemental-ui/core/src/styles/_palette.scss` has effects on some pages. For example the **login page**. You have to rebuild `qbm` to see the changes. 
+
+Show products in from service categories, the products are inside `category-tree.component.ts` inside the `treeDatabase` property. Inside the `rootnodes` key. 
