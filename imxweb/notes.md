@@ -246,3 +246,5 @@ Not every color will be changed. No fix found yet.
 Apparently changing the variable `$iris-blue` in `./node_modules/@elemental-ui/core/src/styles/_palette.scss` has effects on some pages. For example the **login page**. You have to rebuild `qbm` to see the changes. 
 
 Show products in from service categories, the products are inside `category-tree.component.ts` inside the `treeDatabase` property. Inside the `rootnodes` key. 
+
+The event to toggle table view or card view is inside `./projects/qer/src/lib/service-items/serviceitem-list/serviceitem-list.component.html` with the `<imx-data-table></imx-data-table>` or `<imx-data-tiles></imx-data-tiles>` tag.
