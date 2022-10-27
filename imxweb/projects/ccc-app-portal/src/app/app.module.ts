@@ -70,7 +70,7 @@ import {
   ItshopPatternModule,
 } from 'qer';
 
-import { NewMenu, NewRequest, SubMenuModule } from 'ccc';
+import { NewMenu, NewRequest, SubMenuModule, PersonListModule } from 'ccc';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -127,6 +127,7 @@ import { PortalHistoryService } from './portal-history.service';
     NewMenu,
     NewRequest,
     SubMenuModule,
+    PersonListModule,
   ],
   providers: [
     { provide: 'environment', useValue: environment },

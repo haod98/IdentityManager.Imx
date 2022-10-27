@@ -1,4 +1,4 @@
-<!-- <imx-data-source-toolbar
+<imx-data-source-toolbar
   #dst
   [settings]="dstSettings"
   (search)="onSearch($event)"
@@ -12,7 +12,7 @@
   [alwaysVisible]="!referenceUserUid && !uidPersonPeerGroup"
 >
   <imx-data-source-toolbar-custom *ngIf="!referenceUserUid && !uidPersonPeerGroup" [customContentTemplate]="customToolbarTemplate"></imx-data-source-toolbar-custom>
-</imx-data-source-toolbar> -->
+</imx-data-source-toolbar>
 <div class="imx-table-container" *ngIf="!isLoading">
   <!-- <imx-data-tiles
     #dataTiles
