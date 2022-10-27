@@ -1,13 +1,20 @@
-<imx-data-source-toolbar #dst [settings]="dstSettings" (search)="onSearch($event)" [keywords]="keywords"
+<!-- <imx-data-source-toolbar
+  #dst
+  [settings]="dstSettings"
+  (search)="onSearch($event)"
+  [keywords]="keywords"
   (viewSelectionChanged)="onViewSelectionChanged($event)"
-  [options]="options" (navigationStateChanged)="getData($event)"
-  data-imx-identifier="serviceitemlist-dst" [initalView]="dataSourceView.selected" [itemStatus]="status"
-  [alwaysVisible]="!referenceUserUid && !uidPersonPeerGroup">
-  <imx-data-source-toolbar-custom *ngIf="!referenceUserUid && !uidPersonPeerGroup"
-    [customContentTemplate]="customToolbarTemplate"></imx-data-source-toolbar-custom>
-</imx-data-source-toolbar>
+  [options]="options"
+  (navigationStateChanged)="getData($event)"
+  data-imx-identifier="serviceitemlist-dst"
+  [initalView]="dataSourceView.selected"
+  [itemStatus]="status"
+  [alwaysVisible]="!referenceUserUid && !uidPersonPeerGroup"
+>
+  <imx-data-source-toolbar-custom *ngIf="!referenceUserUid && !uidPersonPeerGroup" [customContentTemplate]="customToolbarTemplate"></imx-data-source-toolbar-custom>
+</imx-data-source-toolbar> -->
 <div class="imx-table-container" *ngIf="!isLoading">
-  <imx-data-tiles
+  <!-- <imx-data-tiles
     #dataTiles
     *ngIf="dataSourceView.selected === 'cardlist'"
     height="150px"
@@ -24,7 +31,7 @@
     (actionSelected)="emitAction($event)"
     [contentTemplate]="peerGroupDisplay"
   >
-  </imx-data-tiles>
+  </imx-data-tiles> -->
   <imx-data-table
     *ngIf="dataSourceView.selected === 'table'"
     [dst]="dst"
@@ -37,18 +44,19 @@
     data-imx-identifier="serviceitemlist-datatable"
     [showSelectedItemsMenu]="false"
   >
-    <imx-data-table-column [entityColumn]="entitySchema?.Columns[DisplayColumns.DISPLAY_PROPERTYNAME]"
-      columnLabel="{{ '#LDS#Product' | translate }}" data-imx-identifier="serviceitemlist-datatable-table">
+    <imx-data-table-column
+      [entityColumn]="entitySchema?.Columns[DisplayColumns.DISPLAY_PROPERTYNAME]"
+      columnLabel="{{ '#LDS#Product' | translate }}"
+      data-imx-identifier="serviceitemlist-datatable-table"
+    >
       <ng-template let-prod>
         <div data-imx-identifier="serviceitemlist-datatable-display">{{ prod.GetEntity().GetDisplay() }}</div>
         <div subtitle data-imx-identifier="serviceitemlist-datatable-fullpath">
-          {{ getSubtitle(prod,dst.additionalListElements) }}
+          {{ getSubtitle(prod, dst.additionalListElements) }}
         </div>
-        <p *ngIf="isValueContains(prod.OrderableStatus.value, ['PERSONHASOBJECT', 'PERSONHASASSIGNMENTORDER', 'ASSIGNED'])"
-          class="imx-subtext">
+        <p *ngIf="isValueContains(prod.OrderableStatus.value, ['PERSONHASOBJECT', 'PERSONHASASSIGNMENTORDER', 'ASSIGNED'])" class="imx-subtext">
           <eui-icon icon="info"></eui-icon>
-          {{ '#LDS#This product has already been assigned to {0}.' | translate | ldsReplace:
-          recipients.Column.GetDisplayValue() }}
+          {{ '#LDS#This product has already been assigned to {0}.' | translate | ldsReplace: recipients.Column.GetDisplayValue() }}
         </p>
         <p *ngIf="isValueContains(prod.OrderableStatus.value, 'ORDER')" class="imx-subtext">
           <eui-icon icon="request"></eui-icon>
@@ -67,9 +75,15 @@
     </imx-data-table-column>
     <imx-data-table-generic-column columnName="actions" [columnLabel]="''">
       <ng-template let-prod>
-        <button mat-button color="primary" *ngFor="let action of itemActions" (click)="emitAction(action, prod)"
-          [attr.data-imx-identifier]="'serviceitemlist-datatable-row-button-' + action.name">
+        <button
+          mat-button
+          color="primary"
+          *ngFor="let action of itemActions"
+          (click)="emitAction(action, prod)"
+          [attr.data-imx-identifier]="'serviceitemlist-datatable-row-button-' + action.name"
+        >
           {{ action.description | translate }}
+          AAAAAAAAAAAAAAAA
         </button>
       </ng-template>
     </imx-data-table-generic-column>
@@ -79,8 +93,13 @@
 
 <ng-template #customToolbarTemplate>
   <div class="imx-toolbar-template">
-    <button *ngIf="selectedServiceCategory == null" mat-raised-button color="primary" (click)="openCategoryTree.emit()"
-      data-imx-identifier="servicecategory-list-button-change-category">
+    <button
+      *ngIf="selectedServiceCategory == null"
+      mat-raised-button
+      color="primary"
+      (click)="openCategoryTree.emit()"
+      data-imx-identifier="servicecategory-list-button-change-category"
+    >
       {{ '#LDS#Show products from service category' | translate }}
     </button>
     <mat-chip-list *ngIf="selectedServiceCategory">
@@ -94,7 +113,6 @@
 
 <ng-template #peerGroupDisplay let-item>
   <ng-container *ngIf="uidPersonPeerGroup && status?.enabled(item)">
-    <imx-peer-group [item]="item" [peerGroupSize]="peerGroupSize"
-      [width]="dataSourceView.selected === 'cardlist' ? 'inherit' : '100%'"></imx-peer-group>
+    <imx-peer-group [item]="item" [peerGroupSize]="peerGroupSize" [width]="dataSourceView.selected === 'cardlist' ? 'inherit' : '100%'"></imx-peer-group>
   </ng-container>
 </ng-template>

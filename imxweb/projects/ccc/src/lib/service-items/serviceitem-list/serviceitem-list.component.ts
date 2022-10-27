@@ -79,7 +79,7 @@ export class ServiceitemListComponent implements AfterViewInit, OnChanges, OnDes
   @Input() public recipients: IWriteValue<string>;
   @Input() public referenceUserUid: string;
   @Input() public uidPersonPeerGroup: string;
-  @Input() public dataSourceView = { selected: 'cardlist' };
+  @Input() public dataSourceView = { selected: 'table' }; // cardlist or table
   @Input() public itemActions: DataTileMenuItem[];
 
   @Output() public selectionChanged = new EventEmitter<PortalShopServiceitems[]>();
