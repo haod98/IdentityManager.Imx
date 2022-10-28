@@ -41,17 +41,11 @@ import {
   SettingsService,
   MessageDialogComponent,
   AuthenticationService,
-  ElementalUiConfigService
+  ElementalUiConfigService,
 } from 'qbm';
 import { CollectionLoadParameters, IClientProperty, DisplayColumns, DataModelProperty, EntitySchema, DataModel } from 'imx-qbm-dbts';
 import { IdentitiesService } from './identities.service';
-import {
-  PortalAdminPerson,
-  PortalPersonReports,
-  PortalPersonReportsInteractive,
-  PortalPersonAll,
-  ProjectConfig,
-} from 'imx-api-qer';
+import { PortalAdminPerson, PortalPersonReports, PortalPersonReportsInteractive, PortalPersonAll, ProjectConfig } from 'imx-api-qer';
 import { ProjectConfigurationService } from '../project-configuration/project-configuration.service';
 import { IdentitySidesheetComponent } from './identity-sidesheet/identity-sidesheet.component';
 import { IDataExplorerComponent } from '../data-explorer-view/data-explorer-extension';
@@ -81,7 +75,6 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
    * Settings needed by the DataSourceToolbarComponent
    */
   public dstSettings: DataSourceToolbarSettings;
-
 
   /**
    * Page size, start index, search and filtering options etc.
@@ -134,15 +127,30 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
     qerPermissionService: QerPermissionsService,
     elementalUiConfigService: ElementalUiConfigService,
     identityReports: IdentitiesReportsService,
-    settingsService: SettingsService,
+    settingsService: SettingsService
   ) {
+    console.log('///////////////////////////////////////');
+    console.log('Person Report Schema:', identitiesService.personReportsSchema);
+
+    console.log('///////////////////////////////////////');
+    console.log('Get All Person:', identitiesService.getAllPerson(this.navigationState));
+
+    console.log('///////////////////////////////////////');
+    console.log('Get All Person Admin:', identitiesService.getAllPersonAdmin(this.navigationState));
+
+    console.log('///////////////////////////////////////');
+    console.log('Get Person:', identitiesService.getPerson('a4450a7a-6742-4e77-b686-f66fbf3b29ea'));
+
     this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0 };
+    console.log('///////////////////////////////////////');
+    console.log('Navigation State:', this.navigationState);
+
     this.entitySchemaPersonReports = identitiesService.personReportsSchema;
     this.entitySchemaPerson = identitiesService.personSchema;
     this.entitySchemaAdminPerson = identitiesService.adminPersonSchema;
     this.authorityDataDeleted$ = this.identitiesService.authorityDataDeleted.subscribe(() => this.navigate());
 
-    this.sessionResponse$ = this.authService.onSessionResponse.subscribe(async session => {
+    this.sessionResponse$ = this.authService.onSessionResponse.subscribe(async (session) => {
       if (session.IsLoggedIn) {
         this.currentUser = session.UserUid;
         const overlay = this.busyService.show();
@@ -153,7 +161,7 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
         }
         this.downloadOptions = {
           ...elementalUiConfigService.Config.downloadOptions,
-          url: identityReports.personsManagedReport(30, session.UserUid)
+          url: identityReports.personsManagedReport(30, session.UserUid),
         };
       }
     });
@@ -205,9 +213,11 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
           data: {
             ShowOk: true,
             Title: await this.translate.get('#LDS#Heading Load Object').toPromise(),
-            Message: await this.translate.get('#LDS#The object cannot be loaded. The displayed data may differ from the actual state. The data will now be reloaded.').toPromise()
+            Message: await this.translate
+              .get('#LDS#The object cannot be loaded. The displayed data may differ from the actual state. The data will now be reloaded.')
+              .toPromise(),
           },
-          panelClass: 'imx-messageDialog'
+          panelClass: 'imx-messageDialog',
         });
 
         await dialogRef.afterClosed().toPromise();
@@ -247,7 +257,7 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
         entitySchema: this.entitySchemaPersonReports,
         navigationState: groupData.navigationState,
         dataModel: this.dataModel,
-        identifierForSessionStore: 'identities-grouped'
+        identifierForSessionStore: 'identities-grouped',
       };
     } finally {
       setTimeout(() => this.busyService.hide(overlayRef));
@@ -255,20 +265,23 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
   }
 
   public async createNewIdentity(): Promise<void> {
-    await this.sideSheet.open(CreateNewIdentityComponent, {
-      title: await this.translate.get('#LDS#Heading Create Identity').toPromise(),
-      headerColour: 'iris-blue',
-      bodyColour: 'asher-gray',
-      padding: '0px',
-      width: 'max(650px, 65%)',
-      disableClose: true,
-      testId: 'create-new-identity-sidesheet',
-      icon: 'contactinfo',
-      data: {
-        selectedIdentity: await this.identitiesService.createEmptyEntity(),
-        projectConfig: this.projectConfig
-      }
-    }).afterClosed().toPromise();
+    await this.sideSheet
+      .open(CreateNewIdentityComponent, {
+        title: await this.translate.get('#LDS#Heading Create Identity').toPromise(),
+        headerColour: 'iris-blue',
+        bodyColour: 'asher-gray',
+        padding: '0px',
+        width: 'max(650px, 65%)',
+        disableClose: true,
+        testId: 'create-new-identity-sidesheet',
+        icon: 'contactinfo',
+        data: {
+          selectedIdentity: await this.identitiesService.createEmptyEntity(),
+          projectConfig: this.projectConfig,
+        },
+      })
+      .afterClosed()
+      .toPromise();
 
     return this.navigate();
   }
@@ -292,36 +305,32 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
     // Ensure this column is always added last
     this.displayedColumns.push(this.entitySchemaPersonReports.Columns.XMarkedForDeletion);
 
-    this.displayedInnerColumns = [
-      this.entitySchemaPersonReports.Columns[DisplayColumns.DISPLAY_PROPERTYNAME],
-    ];
+    this.displayedInnerColumns = [this.entitySchemaPersonReports.Columns[DisplayColumns.DISPLAY_PROPERTYNAME]];
 
     let overlayRef: OverlayRef;
     setTimeout(() => (overlayRef = this.busyService.show()));
 
     try {
-      this.dataModel = this.isAdmin
-        ? await this.identitiesService.getDataModelAdmin()
-        : await this.identitiesService.getDataModelReport();
+      this.dataModel = this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
     } finally {
-      setTimeout(() => (this.busyService.hide(overlayRef)));
+      setTimeout(() => this.busyService.hide(overlayRef));
     }
     this.filterOptions = this.dataModel.Filters;
     this.groupingOptions = this.getGroupableProperties(this.dataModel.Properties);
 
     if (!this.isAdmin) {
-      const indexActive = this.filterOptions.findIndex(elem => elem.Name === 'isinactive');
+      const indexActive = this.filterOptions.findIndex((elem) => elem.Name === 'isinactive');
       if (indexActive > -1) {
         this.filterOptions[indexActive].InitialValue = '0';
       }
-      const reports = this.filterOptions.findIndex(elem => elem.Name === 'reports');
+      const reports = this.filterOptions.findIndex((elem) => elem.Name === 'reports');
       if (reports > -1) {
         this.filterOptions[reports].InitialValue = '0';
       }
     }
 
     if (this.applyIssuesFilter) {
-      const indexWithManagerFilter = this.filterOptions.findIndex(elem => elem.Name === 'withmanager');
+      const indexWithManagerFilter = this.filterOptions.findIndex((elem) => elem.Name === 'withmanager');
       if (indexWithManagerFilter > -1) {
         this.filterOptions[indexWithManagerFilter].InitialValue = '0';
       }
@@ -338,13 +347,19 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
       this.logger.trace('Navigation settings', this.navigationState);
       if (!this.groupingInfo && this.groupingOptions.length > 0) {
         this.groupingInfo = {
-          groups: [{
-            property: this.groupingOptions[0],
-            getData: async () => (await this.identitiesService.getGroupedAllPerson(
-              'IdentityType',
-              { PageSize: this.navigationState.PageSize, StartIndex: 0, withProperties: this.navigationState.withProperties }
-            )).filter(item => item.Count > 0)
-          }]
+          groups: [
+            {
+              property: this.groupingOptions[0],
+              getData: async () =>
+                (
+                  await this.identitiesService.getGroupedAllPerson('IdentityType', {
+                    PageSize: this.navigationState.PageSize,
+                    StartIndex: 0,
+                    withProperties: this.navigationState.withProperties,
+                  })
+                ).filter((item) => item.Count > 0),
+            },
+          ],
         };
       }
 
@@ -360,7 +375,7 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
         filters: this.filterOptions,
         groupData: this.groupingInfo,
         dataModel: this.dataModel,
-        identifierForSessionStore: 'identities' + (this.isAdmin ? 'admin' : 'resp')
+        identifierForSessionStore: 'identities' + (this.isAdmin ? 'admin' : 'resp'),
       };
       this.logger.debug(this, `Head at ${data.Data.length + this.navigationState.StartIndex} of ${data.totalCount} item(s)`);
     } finally {
@@ -374,31 +389,32 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
     }
     this.logger.debug(this, `Retrieving details for admin person with id ${id}`);
 
-    return this.isAdmin
-      ? this.identitiesService.getAdminPerson(id)
-      : (await this.identitiesService.getPersonInteractive(id)).Data[0];
+    return this.isAdmin ? this.identitiesService.getAdminPerson(id) : (await this.identitiesService.getPersonInteractive(id)).Data[0];
   }
 
   private async viewIdentity(identity: PortalAdminPerson | PortalPersonReportsInteractive): Promise<void> {
-    await this.sideSheet.open(IdentitySidesheetComponent, {
-      title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
-      headerColour: 'blue',
-      padding: '0px',
-      disableClose: true,
-      width: 'max(700px, 70%)',
-      icon: 'contactinfo',
-      data: {
-        isAdmin: this.isAdmin,
-        projectConfig: this.projectConfig,
-        selectedIdentity: identity,
-      }
-    }).afterClosed().toPromise();
+    await this.sideSheet
+      .open(IdentitySidesheetComponent, {
+        title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
+        headerColour: 'blue',
+        padding: '0px',
+        disableClose: true,
+        width: 'max(700px, 70%)',
+        icon: 'contactinfo',
+        data: {
+          isAdmin: this.isAdmin,
+          projectConfig: this.projectConfig,
+          selectedIdentity: identity,
+        },
+      })
+      .afterClosed()
+      .toPromise();
     return this.navigate();
   }
 
   private getGroupableProperties(identityProperties: DataModelProperty[]): DataModelProperty[] {
     let groupable: DataModelProperty[] = [];
-    groupable = identityProperties.filter(item => item.IsGroupable);
+    groupable = identityProperties.filter((item) => item.IsGroupable);
     return groupable;
   }
 }
