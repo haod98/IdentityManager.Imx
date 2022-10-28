@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MenuService, ClassloggerService, MenuItem } from 'qbm';
 import { Routes, RouterModule } from '@angular/router';
 import { NewRequestComponent } from './new-request.component';
-import { ServiceItemsModule } from '../../service-items/service-items.module';
 
 const routes: Routes = [{ path: 'new-request-item', component: NewRequestComponent }];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), ServiceItemsModule],
+  imports: [CommonModule, RouterModule.forChild(routes)],
   declarations: [NewRequestComponent],
 })
 export class NewRequest {
